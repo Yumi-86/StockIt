@@ -19,4 +19,8 @@ class Shop extends Model
     public function incomingPlans() {
         return $this->hasMany(IncomingPlan::class);
     }
+
+    public function scopeByShop($query,$shopId) {
+        return $query->where('shop_id', $shopId);
+    }
 }

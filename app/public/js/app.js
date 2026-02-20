@@ -37143,6 +37143,17 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
+document.addEventListener('DOMContentLoaded', function () {
+  var buttons = document.querySelectorAll('.js-confirm');
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function (e) {
+      var message = this.dataset.message;
+      if (!confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  });
+});
 
 /***/ }),
 

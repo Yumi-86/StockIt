@@ -36,14 +36,14 @@
                 <a href="{{ route('login') }}" class="text-white fs-3 fw-bold">StockIt</a>
                 @endauth
             </div>
-            <nav class="w-25 text-end">
+            <nav class="w-25">
                 <div class="nav-menu">
-                    @if(!Request::is('register') && !Request::is('login'))
+                    @auth
                     <form action="{{ route('logout') }}" method="post" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-warning btn-sm">ログアウト</button>
                     </form>
-                    @endif
+                    @endauth
                 </div>
             </nav>
         </div>

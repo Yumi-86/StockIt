@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
         factory(IncomingPlan::class, 10)->create();
         
         $this->call(StockSeeder::class);
+
+        DB::table('sequences')->insert([
+            'name' => 'product_code',
+            'current_value' => 0,
+        ]);
     }
 }

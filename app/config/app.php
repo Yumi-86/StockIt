@@ -228,4 +228,10 @@ return [
 
     ],
 
+    'product_prefix' => [
+        '雑貨' => 'MIS',
+        '書籍' => 'LIB',
+        '文具' => 'STA',
+    ],
+
 ];

@@ -17,4 +17,13 @@ class Stock extends Model
     public function shop() {
         return $this->belongsTo(Shop::class);
     }
+
+    public function scopeByShop($query, $shopId) {
+        return $query->where('shop_id', $shopId);
+    }
+
+    public function totalWeight() :int
+    {
+        return $this->product->weight * $this->quantity;
+    }
 }
