@@ -40,10 +40,10 @@
             <h3 class="h3 fw-bold">直近１週間の入荷予定</h3>
         </div>
         <div class="col-md-6 text-end text-right">
-            <a href="">入荷予定一覧へ</a>
+            <a href="{{ route('incomings.index') }}">入荷予定一覧へ</a>
         </div>
     </div>
-    @include('incoming.partials.list', [
+    @include('incomings.partials.list', [
         'incomingPlans' => $inOneWeekIncomings,
         'isDashboard' => true,
     ])

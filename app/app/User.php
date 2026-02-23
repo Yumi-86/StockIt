@@ -68,11 +68,13 @@ class User extends Authenticatable
     public function scopeKeywordSearch($query, $keyword)
     {
         if($keyword !== null && $keyword !== '') {
-            $query->where(function ($q) use ($keyword) {
-                $q->where('email', 'like', "%{$keyword}%")
-                    ->orWhere('name', 'like', "%{$keyword}%")
-                    ->orWhereHas('shop', function ($s) use ($keyword) {
-                        $s->where('name', 'like', "%{$keyword}%");
+            $like = "%{$keyword}%";
+
+            $query->where(function ($q) use ($like) {
+                $q->where('email', 'like', $like)
+                    ->orWhere('name', 'like', $like)
+                    ->orWhereHas('shop', function ($s) use ($like) {
+                        $s->where('name', 'like', $like);
                     });
             });
         }

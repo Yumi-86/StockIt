@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use App\IncomingPlan;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,12 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::bind('incomingPlan', function($value) {
+            return IncomingPlan::notArrived()
+                ->where('id', $value)
+                ->firstOrFail();
+        });
     }
 
     /**

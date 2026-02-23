@@ -13,10 +13,13 @@ return [
     |
     */
 
+
+
+
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
     'after' => 'The :attribute must be a date after :date.',
-    'after_or_equal' => 'The :attribute must be a date after or equal to :date.',
+    'after_or_equal' => ':attributeは:date以降を指定してください。',
     'alpha' => 'The :attribute may only contain letters.',
     'alpha_dash' => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     'alpha_num' => 'The :attribute may only contain letters and numbers.',
@@ -31,7 +34,7 @@ return [
     ],
     'boolean' => 'The :attribute field must be true or false.',
     'confirmed' => ':attribute が一致しません。',
-    'date' => 'The :attribute is not a valid date.',
+    'date' => ':attributeは有効な日付を入力してください。',
     'date_equals' => 'The :attribute must be a date equal to :date.',
     'date_format' => 'The :attribute does not match the format :format.',
     'different' => 'The :attribute and :other must be different.',
@@ -41,7 +44,7 @@ return [
     'distinct' => 'The :attribute field has a duplicate value.',
     'email' => ':attributeには有効なメールアドレスを指定してください。 ',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
-    'exists' => 'The selected :attribute is invalid.',
+    'exists' => '選択された:attributeは無効です。',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field must have a value.',
     'gt' => [
@@ -85,7 +88,7 @@ return [
     'mimes' => ':attribute は :values 形式のファイルを指定してください。',
     'mimetypes' => ':attribute は :values 形式のファイルを指定してください。',
     'min' => [
-        'numeric' => ':attribute は :min 文字以上で入力してください。',
+        'numeric' => ':attribute は :min以上で入力してください。',
         'file' => 'The :attribute must be at least :min kilobytes.',
         'string' => ':attribute は:min文字以上で入力してください。',
         'array' => 'The :attribute must have at least :min items.',
@@ -130,9 +133,7 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+        // 
     ],
 
     /*
@@ -153,6 +154,6 @@ return [
         'weight' => '単体重量',
         'category_id' => 'カテゴリ',
         'image_path' => '画像ファイル',
+        'arriving_date' => '入荷予定日',
     ],
-
 ];

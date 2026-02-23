@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/incoming-plans/create', [IncomingPlanController::class, 'store'])->name('incomings.store');
         Route::get('/incoming-plans/{incomingPlan}/edit', [IncomingPlanController::class, 'edit'])->name('incomings.edit');
         Route::put('/incoming-plans/{incomingPlan}/edit', [IncomingPlanController::class, 'update'])->name('incomings.update');
+        Route::patch('/incoming-plans/{incomingPlan}/confirm', [IncomingPlanController::class, 'confirm'])->name('incomings.confirm');
     });
     Route::middleware(['general'])->group(function () {
         Route::get('/general', [DashboardController::class, 'index'])->name('general.dashboard');

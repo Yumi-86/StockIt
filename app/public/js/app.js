@@ -37143,7 +37143,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-document.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', function () {
   var buttons = document.querySelectorAll('.js-confirm');
   buttons.forEach(function (button) {
     button.addEventListener('click', function (e) {
@@ -37153,6 +37153,43 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+  var putImage = document.getElementById('putImage');
+  var previewImage = document.getElementById('previewImage');
+  var removeBtn = document.getElementById('removeImageBtn');
+  if (putImage && previewImage && removeBtn) {
+    putImage.addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (file) {
+        var _reader = new FileReader();
+        _reader.onload = function (event) {
+          previewImage.src = event.target.result;
+          previewImage.classList.remove('d-none');
+          removeBtn.classList.remove('d-none');
+        };
+      }
+      ;
+      reader.readAsDataURL(file);
+    });
+    removeBtn.addEventListener('click', function () {
+      putImage.value = '';
+      previewImage.src = '';
+      previewImage.classList.add('d-none');
+      removeBtn.classList.add('d-none');
+    });
+  }
+  var product = document.getElementById('product_id');
+  var quantity = document.getElementById('quantity');
+  var totalWeight = document.getElementById('total-weight');
+  if (product && quantity && totalWeight) {
+    var calculateTotal = function calculateTotal() {
+      var selectedOption = product.options[product.selectedIndex];
+      var weight = selectedOption ? selectedOption.dataset.weight : 0;
+      var qty = quantity.value || 0;
+      totalWeight.textContent = weight * qty;
+    };
+    quantity.addEventListener('input', calculateTotal);
+    product.addEventListener('change', calculateTotal);
+  }
 });
 
 /***/ }),

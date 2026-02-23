@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\IncomingPlan;
+use App\Policies\IncomingPlanPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\User;
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         User::class => UserPolicy::class,
+        IncomingPlan::class => IncomingPlanPolicy::class,
     ];
 
     /**
