@@ -2,7 +2,7 @@
     <div class="card-body">
 
         <div class="form-group">
-            <label for="product_id" class="form-label fw-bold">入荷予定商品</label>
+            <label for="product_id" class="form-label font-weight-bold">入荷予定商品</label>
             <select name="product_id" id="product_id" class="form-control @error('product_id') is-invalid @enderror">
                 <option value="">選択してください</option>
 
@@ -24,7 +24,7 @@
         </div>
 
         <div class="form-group">
-            <label for="quantity" class="form-label fw-bold">入荷予定数</label>
+            <label for="quantity" class="form-label font-weight-bold">入荷予定数</label>
             <input type="number"
                 name="quantity"
                 id="quantity"
@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group">
-            <label for="arriving_date" class="form-label fw-bold">入荷予定日</label>
+            <label for="arriving_date" class="form-label font-weight-bold">入荷予定日</label>
             <input type="date"
                 name="arriving_date"
                 id="arriving_date"
@@ -52,8 +52,8 @@
         </div>
 
         <div class="bg-light p-3 rounded text-end mb-4">
-            <span class="fw-bold">合計数量:</span>
-            <span id="total-weight" class="fs-5 text-primary">0</span>g
+            <span class="font-weight-bold">合計数量:</span>
+            <span id="total-weight" class="h5 text-primary">0</span>g
         </div>
 
         <div class="d-flex justify-content-end">

@@ -8,4 +8,6 @@ return [
 
     'incomingPlan_info_updated' => '入荷予定を更新しました',
     'incomingPlan_confirmed' => '入荷を確定しました',
+
+    'stock_adjusted' => ':code :name を:quantity点出庫しました',
 ];

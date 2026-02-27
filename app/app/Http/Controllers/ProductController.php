@@ -23,20 +23,22 @@ class ProductController extends Controller
             ->statusSearch($request->is_active)
             ->paginate(10);
 
-        return view('products.index', compact('categories','products'));
+        return view('products.index', compact('categories', 'products'));
     }
 
-    public function create() {
+    public function create()
+    {
         $categories = Category::all();
         $product = new Product();
 
         return view('products.create', compact('categories', 'product'));
     }
 
-    public function store(ProductRequest $request) {
+    public function store(ProductRequest $request)
+    {
         $data = $request->validated();
 
-        if($request->hasFile('image_path')) {
+        if ($request->hasFile('image_path')) {
             $data['image_path'] = $request->file('image_path')
                 ->store('uploads', 'public');
         }
@@ -61,17 +63,19 @@ class ProductController extends Controller
             ->with('success', '商品を登録しました');
     }
 
-    public function edit(Product $product) {
+    public function edit(Product $product)
+    {
         $categories = Category::all();
 
         return view('products.edit', compact('product', 'categories'));
     }
 
-    public function update(ProductRequest $request, Product $product) {
+    public function update(ProductRequest $request, Product $product)
+    {
         $data = $request->validated();
 
-        if($request->hasFile('image_path')) {
-            if($product->image_path) {
+        if ($request->hasFile('image_path')) {
+            if ($product->image_path) {
                 Storage::disk('public')->delete($product->image_path);
             }
             $path = $request->file('image_path')
@@ -98,5 +102,12 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')
             ->with('success', __('messages.product_status_updated', ['name' => $product->name]));
+    }
+
+    public function showAjax(Product $product)
+    {
+        $product->load('category');
+
+        return response()->json($product);
     }
 }

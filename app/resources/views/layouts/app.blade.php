@@ -28,12 +28,12 @@
             <div class="w-50 text-center">
                 @auth
                 @if (auth()->user()->role === 1)
-                <a href="{{ route('general.dashboard') }}" class="text-white fs-3 fw-bold">StockIt</a>
+                <a href="{{ route('general.dashboard') }}" class="text-white h3 font-weight-bold">StockIt</a>
                 @else
-                <a href="{{ route('admin.dashboard') }}" class="text-white fs-3 fw-bold">StockIt</a>
+                <a href="{{ route('admin.dashboard') }}" class="text-white h3 font-weight-bold">StockIt</a>
                 @endif
                 @else
-                <a href="{{ route('login') }}" class="text-white fs-3 fw-bold">StockIt</a>
+                <a href="{{ route('login') }}" class="text-white h3 font-weight-bold">StockIt</a>
                 @endauth
             </div>
             <nav class="w-25">
@@ -50,6 +50,8 @@
     </header>
     <main>
         @yield('content')
+
+        @stack('modals')
     </main>
 </body>
 

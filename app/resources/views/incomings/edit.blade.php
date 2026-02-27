@@ -14,24 +14,24 @@
                         <h3 class="mb-3 text-secondary">現在の登録情報</h3>
                         <div class="mb-3">
                             商品：
-                            <span class="fw-bold">
+                            <span class="font-weight-bold">
                                 {{ $incomingPlan->product->display_product_code}} {{$incomingPlan->product->name }}
                             </span>
                         </div>
                         <div class="mb-3">
                             数量：
-                            <span class="fw-bold">
+                            <span class="font-weight-bold">
                                 {{ $incomingPlan->quantity}}点
                             </span>
                         </div>
                         <div class="mb-3">
-                            総重量：<span class="fw-bold">
+                            総重量：<span class="font-weight-bold">
                                 {{ $incomingPlan->product->weight * $incomingPlan->quantity }}g
                             </span>
                         </div>
                         <div class="mb-3">
                             入荷予定日：
-                            <span class="fw-bold">
+                            <span class="font-weight-bold">
                                 {{ $incomingPlan->arriving_date }}
                             </span>
                         </div>

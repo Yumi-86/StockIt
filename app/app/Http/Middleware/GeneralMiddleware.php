@@ -15,7 +15,7 @@ class GeneralMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->user()->role === 1) {
+        if(auth()->user()->role !== 1) {
             abort(403);
         }
         return $next($request);

@@ -11,6 +11,11 @@ class Product extends Model
         'code','code_prefix', 'category_id', 'name', 'weight', 'image_path', 'is_active'
     ];
 
+    protected $appends = [
+        'display_product_code',
+        'image_url',
+    ];
+
     public function category() {
         return $this->belongsTo(Category::class);
     }

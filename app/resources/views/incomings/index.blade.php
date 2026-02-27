@@ -8,6 +8,7 @@
             + 入荷予定登録
         </a>
     </div>
+
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -16,6 +17,7 @@
         </button>
     </div>
     @endif
+    
     <div class="card shadow-sm mb-4 border-0 rounded">
         <div class="card-body">
             <form action="{{ route('incomings.index') }}" method="get" class="row align-items-end">

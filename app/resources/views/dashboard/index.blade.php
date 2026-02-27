@@ -2,10 +2,10 @@
 
 @section('content')
 
-@include('dashboard.partials.common')
-
-@if(auth()->user()->role === 0)
-@include('dashboard.partials.admin')
+@if(auth()->user()->isAdmin())
+    @include('dashboard.admin')
+@else
+    @include('dashboard.general')
 @endif
 
 @endsection

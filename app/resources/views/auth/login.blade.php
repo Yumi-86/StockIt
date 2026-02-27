@@ -6,7 +6,7 @@
 <div class="row justify-content-center align-items-center" style="min-height: 80vh; background-color: #f8f9fa;">
     <div class="col-md-5 col-lg-4">
         <div class="card shadow-sm p-4 rounded-3">
-            <h2 class="text-center mb-4 fw-bold text-primary">ログイン</h2>
+            <h2 class="text-center mb-4 font-weight-bold text-primary">ログイン</h2>
 
             <form method="POST" action="{{ route('login') }}" novalidate>
                 @csrf
