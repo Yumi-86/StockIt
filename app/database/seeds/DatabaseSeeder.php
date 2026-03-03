@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
 
         factory(User::class, 10)->create();
-        factory(IncomingPlan::class, 10)->create();
+        factory(IncomingPlan::class, 100)->create();
         
         $this->call(StockSeeder::class);
 

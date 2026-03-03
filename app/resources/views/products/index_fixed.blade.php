@@ -36,7 +36,7 @@
                         id="keyword"
                         class="form-control"
                         value="{{ request('keyword') }}"
-                        placeholder="商品名・カテゴリで検索">
+                        placeholder="商品名・商品コード・カテゴリで検索">
                 </div>
 
                 <div class="col-md-2">

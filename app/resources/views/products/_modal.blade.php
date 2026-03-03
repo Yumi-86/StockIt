@@ -38,7 +38,12 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex justify-content-right">
+                @if(auth()->user()->role === 0 )
+                <a id="editLink" class="btn btn-outline-primary mr-3">
+                    商品情報を編集する
+                </a>
+                @endif
                 <button class="btn btn-secondary" data-dismiss="modal" type="button">CLOSE</button>
             </div>
         </div>

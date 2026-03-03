@@ -1,14 +1,24 @@
-        <div class="row">
-            <div class="col-lg-4 col-md-12">
-                <img src="{{ $product->image_url ?? '' }}"
-                    alt="商品画像"
-                    class="img-fluid mb-2 {{ $product->image_url ? '' : 'd-none' }}"
-                    id="previewImage">
+        <div class="row d-flex justify-content-center align-items.center">
+            <div class="col-lg-5 col-md-12 mr-4">
+                <div class="w-100 mb-2 border bg-light d-flex justify-content-center align-items-center" style="height: 250px;">
 
-                <label for="putImage">商品画像を選択してください</label>
-                <input type="file" name="image_path" id="putImage" class="form-control-file mb-3">
+                    <img src="{{ $product->image_url ?? '' }}"
+                        alt="商品画像"
+                        class="img-fluid {{ $product->image_url ? '' : 'd-none' }}"
+                        style="max-height: 100%; object-fit: contain;"
+                        id="previewImage">
+                    <span id="noImageText" class="text-muted {{ $product->image_url ? 'd-none' : '' }}">
+                        画像が選択されていません
+                    </span>
 
-                <button type="button" id="removeImageBtn" class="btn btn-sm btn-outline-danger d-none">
+                </div>
+
+                <label for="putImage" class="btn btn-outline-primary btn-sm mb-0 mr-3 mt-2">
+                    商品画像を選択してください
+                </label>
+                <input type="file" name="image_path" id="putImage" class="d-none">
+
+                <button type="button" id="removeImageBtn" class="btn btn-sm btn-outline-danger mt-2 d-none">
                     画像クリア
                 </button>
 
@@ -16,7 +26,7 @@
                 <div class="d-block alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-lg-8 col-md-12">
+            <div class="col-lg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         @if($product->exists)

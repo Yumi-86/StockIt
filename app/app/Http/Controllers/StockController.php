@@ -19,12 +19,19 @@ class StockController extends Controller
         if(!$user->isAdmin()) {
             $query->where('shop_id', $user->shop_id);
         }
-        
+
         $stocks = $query->keywordSearch($request->keyword)
             ->categorySearch($request->category_id)
             ->paginate(10);
 
         $categories = Category::all();
+
+        if ($request->ajax()) {
+            if ($stocks->isEmpty()) {
+                return '';
+            }
+            return view('stocks.partials.list', compact('stocks'))->render();
+        }
 
         return view('stocks.index', compact('stocks', 'categories'));
     }

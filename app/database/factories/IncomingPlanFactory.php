@@ -7,7 +7,7 @@ use App\Product;
 use Faker\Generator as Faker;
 
 $factory->define(IncomingPlan::class, function (Faker $faker) {
-    $arrivingDate = $faker->boolean(20)
+    $arrivingDate = $faker->boolean(40)
         ? $faker->dateTimeBetween('-7 days', 'yesterday')
         : $faker->dateTimeBetween('today', '+30 days');
 

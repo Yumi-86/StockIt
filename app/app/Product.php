@@ -32,17 +32,42 @@ class Product extends Model
         return $this->is_active ? '有効' : '無効';
     }
 
-    public function scopeKeywordSearch($query, $keyword) {
-        if($keyword !== null && $keyword !== '') {
-            $query->where(function ($q) use ($keyword) {
-                $q->where('code', 'like', "%{$keyword}%")
-                    ->orWhere('name', 'like', "%{$keyword}%")
-                    ->orWhereHas('category', function ($c) use ($keyword) {
-                        $c->where('name', 'like', "%{$keyword}%");
-                    });
-            });
+    public function scopeCodeSearch($query, $keyword)
+    {
+        if ($keyword === null && $keyword === '') {
+            return $query;
         }
-        return $query;
+
+        $keyword = trim($keyword);
+
+        if (!str_contains($keyword, '-')) {
+            return $query;
+        }
+
+        [$prefix, $code] = array_pad(explode('-', $keyword, 2), 2, null);
+
+        if (!$prefix || !$code) {
+            return $query;
+        }
+
+        $code = ltrim($code, '0');
+
+        return $query->where('code_prefix', $prefix)
+            ->where('code', $code);
+    }
+
+    public function scopeKeywordSearch($query, $keyword)
+    {
+        if($keyword == null || $keyword == '') {
+            return $query;
+        }
+        
+        return $query->where(function ($q) use ($keyword) {
+            $q->where('name', 'like', "%{$keyword}%")
+                ->orWhereHas('category', function ($c) use ($keyword) {
+                    $c->where('name', 'like', "%{$keyword}%");
+                });
+        });
     }
 
     public function scopeCategorySearch($query, $categoryId) {
@@ -67,13 +92,11 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        if(!$this->exists) {
-            return null;
-        }
-        if($this->image_path && file_exists(public_path('storage/' . $this->image_path))) {
-            return asset('storage/' . $this->image_path);
-        }
+        if($this->image_path &&
+            file_exists('storage/' . $this->image_path)) {
+                return asset('storage/' . $this->image_path);
+            }
 
-        return asset('images/no-image.png');
+        return null;
     }
 }

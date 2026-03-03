@@ -14,7 +14,7 @@ $factory->define(Stock::class, function (Faker $faker) {
             'product_id' => $plan->product_id,
         ]);
         $stock->quantity += $plan->quantity;
-        
+
     }
     return [
         

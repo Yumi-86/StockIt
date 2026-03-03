@@ -37147,7 +37147,7 @@ function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-window.addEventListener('load', function () {
+window.addEventListener('DOMContentLoaded', function () {
   var buttons = document.querySelectorAll('.js-confirm');
   buttons.forEach(function (button) {
     button.addEventListener('click', function (e) {
@@ -37160,25 +37160,29 @@ window.addEventListener('load', function () {
   var putImage = document.getElementById('putImage');
   var previewImage = document.getElementById('previewImage');
   var removeBtn = document.getElementById('removeImageBtn');
+  var noImageText = document.getElementById('noImageText');
   if (putImage && previewImage && removeBtn) {
     putImage.addEventListener('change', function (e) {
       var file = e.target.files[0];
       if (file) {
-        var _reader = new FileReader();
-        _reader.onload = function (event) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+          console.log(event.target.result);
           previewImage.src = event.target.result;
           previewImage.classList.remove('d-none');
           removeBtn.classList.remove('d-none');
+          noImageText.classList.add('d-none');
         };
+        reader.readAsDataURL(file);
       }
       ;
-      reader.readAsDataURL(file);
     });
     removeBtn.addEventListener('click', function () {
       putImage.value = '';
       previewImage.src = '';
       previewImage.classList.add('d-none');
       removeBtn.classList.add('d-none');
+      noImageText.classList.remove('d-none');
     });
   }
   var product = document.getElementById('product_id');
@@ -37203,51 +37207,132 @@ window.addEventListener('load', function () {
       var after = before - issue;
       var warning = document.getElementById('issue_warning');
       var danger = document.getElementById('issue_danger');
+      var submitBtn = document.getElementById('submitBtn');
       if (e.target.value !== '') {
         stockAfter.textContent = after;
         if (before > issue) {
           warning.classList.add('d-none');
           stockAfter.classList.remove('text-danger');
           danger.classList.add('d-none');
+          submitBtn.disabled = false;
         } else if (before == issue) {
           stockAfter.classList.remove('text-danger');
           danger.classList.add('d-none');
           warning.classList.remove('d-none');
+          submitBtn.disabled = false;
         } else if (before < issue) {
           warning.classList.add('d-none');
           stockAfter.classList.add('text-danger');
           danger.classList.remove('d-none');
+          submitBtn.disabled = true;
         }
       }
     });
   }
-  document.querySelectorAll('.js-product-detail').forEach(function (button) {
-    button.addEventListener('click', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var productId, response, data;
+  document.addEventListener('click', /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
+      var _data$image_url;
+      var button, productId, modalImg, editLink, response, data;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.n) {
           case 0:
-            productId = this.dataset.productId;
-            _context.n = 1;
-            return fetch("/products/".concat(productId));
+            button = e.target.closest('.js-product-detail');
+            if (button) {
+              _context.n = 1;
+              break;
+            }
+            return _context.a(2);
           case 1:
-            response = _context.v;
+            productId = button.dataset.productId;
+            modalImg = document.getElementById('modal-img');
+            editLink = document.getElementById('editLink');
             _context.n = 2;
-            return response.json();
+            return fetch("/products/".concat(productId));
           case 2:
+            response = _context.v;
+            _context.n = 3;
+            return response.json();
+          case 3:
             data = _context.v;
             document.getElementById('modal-code').textContent = data.display_product_code;
             document.getElementById('modal-name').textContent = data.name;
             document.getElementById('modal-category').textContent = data.category.name;
             document.getElementById('modal-weight').textContent = data.weight;
-            document.getElementById('modal-img').src = data.image_url;
+            modalImg.src = (_data$image_url = data.image_url) !== null && _data$image_url !== void 0 ? _data$image_url : window.noImageUrl;
+            if (editLink) {
+              editLink.href = "/products/".concat(productId, "/edit");
+            }
             $('#productModal').modal('show');
-          case 3:
+          case 4:
             return _context.a(2);
         }
-      }, _callee, this);
-    })));
-  });
+      }, _callee);
+    }));
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  var page = 1;
+  var loading = false;
+  function handleScroll() {
+    return _handleScroll.apply(this, arguments);
+  }
+  function _handleScroll() {
+    _handleScroll = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      var loadingEl, params, response, html;
+      return _regenerator().w(function (_context2) {
+        while (1) switch (_context2.n) {
+          case 0:
+            if (!loading) {
+              _context2.n = 1;
+              break;
+            }
+            return _context2.a(2);
+          case 1:
+            if (!(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 200)) {
+              _context2.n = 5;
+              break;
+            }
+            loading = true;
+            page++;
+            loadingEl = document.getElementById('loading');
+            loadingEl.classList.remove('d-none');
+            loadingEl.classList.add('d-block');
+            params = new URLSearchParams(window.location.search);
+            params.set('page', page);
+            _context2.n = 2;
+            return fetch("?".concat(params.toString()), {
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+              }
+            });
+          case 2:
+            response = _context2.v;
+            _context2.n = 3;
+            return response.text();
+          case 3:
+            html = _context2.v;
+            if (!(html.trim() === '')) {
+              _context2.n = 4;
+              break;
+            }
+            window.removeEventListener('scroll', handleScroll);
+            loadingEl.classList.add('d-none');
+            loadingEl.classList.remove('d-block');
+            document.getElementById('endOfList').classList.remove('d-none');
+            return _context2.a(2);
+          case 4:
+            document.getElementById('stock-list').insertAdjacentHTML('beforeend', html);
+            loadingEl.classList.add('d-none');
+            loading = false;
+          case 5:
+            return _context2.a(2);
+        }
+      }, _callee2);
+    }));
+    return _handleScroll.apply(this, arguments);
+  }
+  window.addEventListener('scroll', handleScroll);
 });
 
 /***/ }),

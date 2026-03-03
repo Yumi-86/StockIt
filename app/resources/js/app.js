@@ -1,7 +1,7 @@
 require('./bootstrap');
 require('bootstrap');
 
-window.addEventListener('load', function () {
+window.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('.js-confirm');
 
     buttons.forEach(button => {
@@ -17,6 +17,7 @@ window.addEventListener('load', function () {
     const putImage = document.getElementById('putImage');
     const previewImage = document.getElementById('previewImage');
     const removeBtn = document.getElementById('removeImageBtn');
+    const noImageText = document.getElementById('noImageText');
 
     if (putImage && previewImage && removeBtn) {
 
@@ -25,14 +26,17 @@ window.addEventListener('load', function () {
 
             if (file) {
                 const reader = new FileReader();
-
+                
                 reader.onload = function (event) {
+                    console.log(event.target.result);
                     previewImage.src = event.target.result;
                     previewImage.classList.remove('d-none');
                     removeBtn.classList.remove('d-none');
+                    noImageText.classList.add('d-none')
+
                 }
+                reader.readAsDataURL(file);
             };
-            reader.readAsDataURL(file);
         });
 
         removeBtn.addEventListener('click', function () {
@@ -40,6 +44,7 @@ window.addEventListener('load', function () {
             previewImage.src = '';
             previewImage.classList.add('d-none');
             removeBtn.classList.add('d-none');
+            noImageText.classList.remove('d-none');
         });
     }
 
@@ -73,6 +78,7 @@ window.addEventListener('load', function () {
             const after = before - issue;
             const warning = document.getElementById('issue_warning');
             const danger = document.getElementById('issue_danger')
+            const submitBtn = document.getElementById('submitBtn');
 
             if (e.target.value !== '') {
                 stockAfter.textContent = after;
@@ -81,34 +87,89 @@ window.addEventListener('load', function () {
                     warning.classList.add('d-none');
                     stockAfter.classList.remove('text-danger');
                     danger.classList.add('d-none');
+                    submitBtn.disabled = false;
                 } else if (before == issue) {
                     stockAfter.classList.remove('text-danger');
                     danger.classList.add('d-none');
                     warning.classList.remove('d-none');
+                    submitBtn.disabled = false;
                 } else if (before < issue) {
                     warning.classList.add('d-none');
                     stockAfter.classList.add('text-danger');
                     danger.classList.remove('d-none');
+                    submitBtn.disabled = true;
                 }
             }
         });
     }
 
-    document.querySelectorAll('.js-product-detail').forEach(button => {
-        button.addEventListener('click', async function () {
-            
-            const productId = this.dataset.productId;
+    document.addEventListener('click', async function (e) {
+        const button = e.target.closest('.js-product-detail');
 
-            const response = await fetch(`/products/${productId}`);
-            const data = await response.json();
+        if (!button) return;
 
-            document.getElementById('modal-code').textContent = data.display_product_code;
-            document.getElementById('modal-name').textContent = data.name;
-            document.getElementById('modal-category').textContent = data.category.name;
-            document.getElementById('modal-weight').textContent = data.weight;
-            document.getElementById('modal-img').src = data.image_url;
+        const productId = button.dataset.productId;
+        const modalImg = document.getElementById('modal-img');
+        const editLink = document.getElementById('editLink');
 
-            $('#productModal').modal('show');
-        });
+        const response = await fetch(`/products/${productId}`);
+        const data = await response.json();
+
+        document.getElementById('modal-code').textContent = data.display_product_code;
+        document.getElementById('modal-name').textContent = data.name;
+        document.getElementById('modal-category').textContent = data.category.name;
+        document.getElementById('modal-weight').textContent = data.weight;
+        modalImg.src = data.image_url ?? window.noImageUrl;
+
+        if (editLink) {
+            editLink.href = `/products/${productId}/edit`;
+        }
+
+        $('#productModal').modal('show');
     });
+
+    let page = 1;
+    let loading = false;
+
+    async function handleScroll() {
+        if (loading) return;
+
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 200) {
+
+            loading = true;
+            page++;
+
+            const loadingEl = document.getElementById('loading');
+            loadingEl.classList.remove('d-none');
+            loadingEl.classList.add('d-block');
+
+            const params = new URLSearchParams(window.location.search);
+            params.set('page', page);
+
+            const response = await fetch(`?${params.toString()}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            const html = await response.text();
+
+            if (html.trim() === '') {
+                window.removeEventListener('scroll', handleScroll);
+                loadingEl.classList.add('d-none');
+                loadingEl.classList.remove('d-block');
+                document.getElementById('endOfList').classList.remove('d-none');
+                return;
+            }
+
+            document
+                .getElementById('stock-list')
+                .insertAdjacentHTML('beforeend', html);
+
+            loadingEl.classList.add('d-none');
+            loading = false;
+        }
+    }
+    window.addEventListener('scroll', handleScroll);
+    
 });

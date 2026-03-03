@@ -61,7 +61,7 @@
                             <a href="{{ route('stocks.index') }}" class="btn btn-outline-secondary w-25 mr-5">
                                 キャンセル
                             </a>
-                            <button class="btn btn-primary w-25" type="submit">
+                            <button class="btn btn-primary w-25" type="submit" id="submitBtn">
                                 確定
                             </button>
                         </div>

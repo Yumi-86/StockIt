@@ -54,15 +54,6 @@
     </div>
     <div class="row mb-4">
         <div class="col-md-12">
-            <div class="d-flex justify-content-between">
-                <div>
-                    全 {{ $stocks->total() }} 件
-                </div>
-                <div>
-                    {{ $stocks->appends(request()->except('page'))
-                ->links('pagination::bootstrap-4') }}
-                </div>
-            </div>
             <table class="table table-bordered table-hover align-middle">
                 <thead>
                     <tr>
@@ -77,46 +68,15 @@
                         <th>操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @forelse($stocks as $stock)
-                    <tr>
-                        <td>{{ $stock->display_product_code }}</td>
-                        <td>{{ $stock->product->name }}</td>
-                        <td>{{ $stock->product->category->name }}</td>
-                        @if(auth()->user()->isAdmin())
-                        <td>{{ $stock->shop->name }}</td>
-                        @endif
-                        <td>{{ $stock->quantity }}</td>
-                        <td>
-                            {{ number_format($stock->totalWeight()) }}g
-                        </td>
-                        <td>
-                            @if(auth()->user()->shop_id === $stock->shop_id )
-                            <div class="d-flex align-items-center justify-content-center">
-                                <button class="btn btn-sm btn-outline-primary mr-2 js-product-detail" data-product-id="{{ $stock->product_id }}">商品詳細</button>
-                                <a href="{{ route('stocks.edit', $stock) }}" class="btn btn-sm btn-outline-danger">
-                                    出庫登録
-                                </a>
-                            </div>
-                            @else
-                            <div class="d-flex align-items-center justify-content-center">
-                                <button class="btn btn-sm btn-outline-primary mr-2 js-product-detail" data-product-id="{{ $stock->product_id }}">商品詳細</button>
-                            </div>
-                            @endif
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="{{ auth()->user()->isAdmin() ? 7 : 6 }}" class="text-center">
-                            まだ在庫はありません
-                        </td>
-                    </tr>
-                    @endforelse
+                <tbody id="stock-list">
+                    @include('stocks.partials.list')
                 </tbody>
             </table>
-            <div class="d-flex justify-content-end align-items-center">
-                {{ $stocks->appends(request()->except('page'))
-            ->links('pagination::bootstrap-4') }}
+            <div id="loading" class="d-none">
+                Loading...
+            </div>
+            <div id="endOfList" class="d-none text-center h6 text-secondary font-weight-bold">
+                在庫商品は以上です
             </div>
         </div>
     </div>

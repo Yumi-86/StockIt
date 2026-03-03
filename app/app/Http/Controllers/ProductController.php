@@ -18,6 +18,7 @@ class ProductController extends Controller
         $categories = Category::all();
 
         $products = Product::with('category')
+            ->codeSearch($request->code)
             ->keywordSearch($request->keyword)
             ->categorySearch($request->category_id)
             ->statusSearch($request->is_active)
