@@ -22,7 +22,7 @@
                 {{ $message }}
             </div>
             @enderror
-            <form action="{{ route('stocks.index') }}" method="get" class="row align-items-end">
+            <form action="{{ $mode === 'all' ? route('stocks.all') : route('stocks.my') }}" method="get" class="row align-items-end">
                 <div class="col-md-2">
                     <label for="code" class="form-label">商品コード</label>
                     <input type="text"
@@ -59,7 +59,7 @@
 
                 <div class="col-md-3 d-flex justify-content-end">
                     <button class="btn btn-primary px-4 mr-2">検索</button>
-                    <a href="{{ route('stocks.index') }}" class="btn btn-outline-secondary px-4">
+                    <a href="{{ $mode === 'all' ? route('stocks.all') : route('stocks.my') }}" class="btn btn-outline-secondary px-4">
                         クリア
                     </a>
                 </div>
@@ -68,13 +68,18 @@
     </div>
     <div class="row mb-4">
         <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center my-2">
+                <div>
+                    全 {{ $stocks->total() }} 件
+                </div>
+            </div>
             <table class="table table-bordered table-hover align-middle">
                 <thead>
                     <tr>
                         <th>商品コード</th>
                         <th>商品名</th>
                         <th>カテゴリ</th>
-                        @if(auth()->user()->isAdmin())
+                        @if($mode === 'all')
                         <th>所属店舗</th>
                         @endif
                         <th>在庫数</th>

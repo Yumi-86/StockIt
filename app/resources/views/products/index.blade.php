@@ -28,11 +28,11 @@
                 <div class="col-lg-2 col-md-2">
                     <label for="code" class="form-label">商品コード</label>
                     <input type="text"
-                    name="code"
-                    id="code"
-                    class="form-control @error('code') is-invalid @enderror"
-                    value="{{ old('code', request('code')) }}"
-                    placeholder="ABC-01234">
+                        name="code"
+                        id="code"
+                        class="form-control @error('code') is-invalid @enderror"
+                        value="{{ old('code', request('code')) }}"
+                        placeholder="ABC-01234">
                 </div>
 
                 <div class="col-lg-3 col-md-2">
@@ -79,9 +79,6 @@
                 <div>
                     全 {{ $products->total() }} 件
                 </div>
-                <div>
-                    {{ $products->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
-                </div>
             </div>
             <table class="table table-striped table-hover align-middle ">
                 <thead>
@@ -95,50 +92,15 @@
                         <th style="width: 15%;">操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @forelse($products as $product)
-                    <tr>
-                        <td>{{ $product->display_product_code }}</td>
-                        <td>
-                            <img src="{{ $product->image_url ?? asset('images/no-image.png') }}" width="60" alt="商品画像" width="60">
-                        </td>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->category->name }}</td>
-                        <td>{{ number_format($product->weight) }}g</td>
-                        <td>
-                            {{ $product->statusName }}
-                        </td>
-                        <td>
-                            @if($product->is_active)
-                            <div class="d-flex align-items-center">
-                                <a href="{{ route('products.edit', $product ) }}" class="btn btn-sm btn-outline-primary mr-2">編集</a>
-                                <form action="{{ route('products.toggle', $product) }}" method="post" class="mb-0">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button class="btn btn-sm btn-outline-danger js-confirm"
-                                        data-message="本当に無効化しますか？">無効化</button>
-                                </form>
-                            </div>
-                            @else
-                            <div class="d-flex justify-content-start">
-                                <form action="{{ route('products.toggle', $product ) }}" method="post" class="mb-0">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button class="btn btn-sm btn-outline-success">有効化</button>
-                                </form>
-                            </div>
-                            @endif
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="7" class="text-center">商品が存在しません。</td>
-                    </tr>
-                    @endforelse
+                <tbody id="list">
+                    @include('products.partials.list')
                 </tbody>
             </table>
-            <div class="d-flex justify-content-end align-items-center my-3">
-                {{ $products->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
+            <div id="loading" class="d-none">
+                Loading...
+            </div>
+            <div id="endOfList" class="d-none text-center h6 text-secondary font-weight-bold">
+                商品は以上です
             </div>
         </div>
     </div>

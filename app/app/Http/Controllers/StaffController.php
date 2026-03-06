@@ -18,6 +18,14 @@ class StaffController extends Controller
             ->isActiveSearch($request->input('is_active'))
             ->paginate(10);
 
+        if ($request->ajax()) {
+            if($staffs->isEmpty()) {
+                return '';
+            }
+            return view('staff.partials.list', compact('staffs'))
+                ->render();
+        }
+
         return view('staff.index', compact('staffs'));
     }
 

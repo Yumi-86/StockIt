@@ -12,7 +12,7 @@
                         @csrf
                         @method('PUT')
 
-                        @include('staff._form', [
+                        @include('staff.partials.form', [
                         'buttonText' => '更新',
                         'staff' => $staff,
                         'isEdit' => true

@@ -24,7 +24,7 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
         'is_active' => true,
-        'shop_id' => rand(1, 2),
+        'shop_id' => $faker->numberBetween(1,47),
         'role' => 1,
     ];
 });

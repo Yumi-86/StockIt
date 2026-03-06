@@ -65,6 +65,11 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center my-2">
+                <div>
+                    全 {{ $shops->total() }} 件
+                </div>
+            </div>
             <table class="table table-striped table-hover align-middle ">
                 <thead>
                     <tr>

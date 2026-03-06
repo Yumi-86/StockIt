@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminUserSeeder::class);
         $this->call(CategorySeeder::class);
 
-        factory(User::class, 10)->create();
+        factory(User::class, 200)->create();
         factory(IncomingPlan::class, 200)->create();
         
         $this->call(StockSeeder::class);

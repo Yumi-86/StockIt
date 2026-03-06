@@ -3,10 +3,10 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center my-4">
-            <h2 class="mb-0">スタッフ一覧</h2>
-            <a href="{{ route('staff.create') }}" class="btn btn-primary btn-sm">
-                + スタッフ登録
-            </a>
+        <h2 class="mb-0">スタッフ一覧</h2>
+        <a href="{{ route('staff.create') }}" class="btn btn-primary btn-sm">
+            + スタッフ登録
+        </a>
     </div>
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -62,9 +62,6 @@
                 <div>
                     全 {{ $staffs->total() }} 件
                 </div>
-                <div>
-                    {{ $staffs->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
-                </div>
             </div>
             <table class="table table-striped table-hover align-middle ">
                 <thead>
@@ -77,45 +74,15 @@
                         <th style="width: 15%;">操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @forelse($staffs as $staff)
-                    <tr>
-                        <td>{{ $staff->name }}</td>
-                        <td>{{ $staff->email }}</td>
-                        <td>{{ $staff->shop->name }}</td>
-                        <td>{{ $staff->role_name }}</td>
-                        <td>{{ $staff->status_name }}</td>
-                        <td>
-                            @if($staff->is_active)
-                            <div class="d-flex align-items-center">
-                                <a href="{{ route('staff.edit', ['user' => $staff] ) }}" class="btn btn-sm btn-outline-primary mr-2">編集</a>
-                                <form action="{{ route('staff.toggle', ['user' => $staff]) }}" method="post" class="mb-0">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button class="btn btn-sm btn-outline-danger js-confirm"
-                                        data-message="本当に無効化しますか？">無効化</button>
-                                </form>
-                            </div>
-                            @else
-                            <div class="d-flex justify-content-start">
-                                <form action="{{ route('staff.toggle', ['user' => $staff] ) }}" method="post" class="mb-0">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button class="btn btn-sm btn-outline-success">有効化</button>
-                                </form>
-                            </div>
-                            @endif
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center">ユーザーが存在しません。</td>
-                    </tr>
-                    @endforelse
+                <tbody id="list">
+                    @include('staff.partials.list')
                 </tbody>
             </table>
-            <div class="d-flex justify-content-end align-items-center my-3">
-                {{ $staffs->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
+            <div id="loading" class="d-none">
+                Loading...
+            </div>
+            <div id="endOfList" class="d-none text-center h6 text-secondary font-weight-bold">
+                登録スタッフは以上です
             </div>
         </div>
     </div>

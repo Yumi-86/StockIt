@@ -11,7 +11,7 @@
                     <form action="{{ route('staff.store') }}" method="post" novalidate>
                         @csrf
         
-                        @include('staff._form', [
+                        @include('staff.partials.form', [
                         'buttonText' => '登録',
                         'staff' => null,
                         'isEdit' => false

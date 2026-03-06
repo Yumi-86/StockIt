@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href="{{ route('stocks.index') }}"
+                <a href="{{ route('stocks.my') }}"
                     class="btn btn-outline-secondary w-100 py-3">
                     在庫一覧を見る
                 </a>

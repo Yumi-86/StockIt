@@ -11,15 +11,10 @@ use App\Http\Requests\StockRequest;
 
 class StockController extends Controller
 {
-    public function index(CodeSearchRequest $request)
+    public function all(CodeSearchRequest $request)
     {
-        $user = Auth::user();
 
         $query = Stock::with(['product.category', 'shop']);
-
-        if(!$user->isAdmin()) {
-            $query->where('shop_id', $user->shop_id);
-        }
 
         $stocks = $query->codeSearch($request->code)
             ->keywordSearch($request->keyword)
@@ -32,10 +27,49 @@ class StockController extends Controller
             if ($stocks->isEmpty()) {
                 return '';
             }
-            return view('stocks.partials.list', compact('stocks'))->render();
+            return view('stocks.partials.list', [
+                'stocks' => $stocks,
+                'mode' => 'all'
+            ])->render();
         }
 
-        return view('stocks.index', compact('stocks', 'categories'));
+        return view('stocks.index', [
+            'stocks' => $stocks,
+            'categories' => $categories,
+            'mode' => 'all'
+        ]);
+    }
+
+    public function myShop(CodeSearchRequest $request)
+    {
+        $user = Auth::user();
+
+        $query = Stock::with('product.category');
+
+        $query->where('shop_id', $user->shop_id);
+
+        $stocks = $query->codeSearch($request->code)
+            ->keywordSearch($request->keyword)
+            ->categorySearch($request->category_id)
+            ->paginate(10);
+
+        $categories = Category::all();
+
+        if ($request->ajax()) {
+            if ($stocks->isEmpty()) {
+                return '';
+            }
+            return view('stocks.partials.list', [
+                'stocks' => $stocks,
+                'mode' => 'my'
+            ])->render();
+        }
+
+        return view('stocks.index', [
+            'stocks' => $stocks,
+            'categories' => $categories,
+            'mode' => 'my'
+        ]);
     }
 
     public function edit(Stock $stock) {
@@ -50,7 +84,7 @@ class StockController extends Controller
 
         $stock->decrement('quantity', $data['quantity']);
         
-        return redirect()->route('stocks.index')
+        return redirect()->route('stocks.my')
             ->with('success', __('messages.stock_adjusted', [
                 'code' => $stock->display_product_code,
                 'name' => $stock->product->name,

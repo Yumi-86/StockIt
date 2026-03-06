@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center align-items-center mt-4">
-                            <a href="{{ route('stocks.index') }}" class="btn btn-outline-secondary w-25 mr-5">
+                            <a href="{{ route('stocks.my') }}" class="btn btn-outline-secondary w-25 mr-5">
                                 キャンセル
                             </a>
                             <button class="btn btn-primary w-25" type="submit" id="submitBtn">

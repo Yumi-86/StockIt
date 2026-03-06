@@ -25,6 +25,14 @@ class ProductController extends Controller
             ->statusSearch($request->is_active)
             ->paginate(10);
 
+        if($request->ajax()) {
+            if ($products->isEmpty()) {
+                return '';
+            }
+            return view('products.partials.list', compact('products'))
+                ->render();
+        }
+
         return view('products.index', compact('categories', 'products'));
     }
 

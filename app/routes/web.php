@@ -48,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/shops/{shop}/edit', [ShopController::class, 'edit'])->name('shops.edit');
         Route::put('/shops/{shop}/edit', [ShopController::class, 'update'])->name('shops.update');
         Route::patch('/shops/{shop}/toggle', [ShopController::class, 'toggle'])->name('shops.toggle');
+        
+        Route::get('/stocks/all', [StockController::class, 'all'])->name('stocks.all');
     });
     Route::middleware(['general'])->group(function () {
         Route::get('/general', [DashboardController::class, 'index'])->name('general.dashboard');
@@ -60,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/incoming-plans/{incomingPlan}/edit', [IncomingPlanController::class, 'update'])->name('incomings.update');
     Route::patch('/incoming-plans/{incomingPlan}/confirm', [IncomingPlanController::class, 'confirm'])->name('incomings.confirm');
 
-    Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
+    Route::get('/stocks/my-shop', [StockController::class, 'myShop'])->name('stocks.my');
     Route::get('/stocks/{stock}/edit', [StockController::class, 'edit'])->name('stocks.edit');
     Route::patch('/stocks/{stock}/edit', [StockController::class, 'update'])->name('stocks.update');
 

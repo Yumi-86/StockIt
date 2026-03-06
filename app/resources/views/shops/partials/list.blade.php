@@ -4,7 +4,7 @@
     <td>{{ $shop->name }}</td>
     <td>{{ $shop->prefecture }}{{ $shop->city }}</td>
     <td>{{ $shop->phone }}</td>
-    <td>{{ $shop->stocks_count }}点</td>
+    <td>{{ $shop->stocks_count }}</td>
     <td>{{ $shop->status_name }}</td>
     <td>{{ $shop->created_at->format('Y-m-d') }}</td>
     <td>

@@ -34,16 +34,22 @@
         </h2>
 
         <div class="row g-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <a href="{{ route('incomings.index') }}"
                     class="btn btn-outline-primary w-100 py-3">
                     入荷予定一覧を見る
                 </a>
             </div>
-            <div class="col-md-6">
-                <a href="{{ route('stocks.index') }}"
+            <div class="col-md-4">
+                <a href="{{ route('stocks.my') }}"
+                    class="btn btn-outline-success w-100 py-3">
+                    自店舗在庫一覧を見る
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ route('stocks.all') }}"
                     class="btn btn-outline-secondary w-100 py-3">
-                    在庫一覧を見る
+                    全店舗在庫一覧を見る
                 </a>
             </div>
         </div>
