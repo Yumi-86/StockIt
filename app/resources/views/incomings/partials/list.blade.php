@@ -11,17 +11,17 @@
             </div>
         </div>
         @endif
-        <table class="table table-bordered table-hover align-middle">
+        <table class="table table-bordered table-hover align-middle table-fixed">
             <thead>
                 <tr>
                     <th>商品コード</th>
                     <th>商品名</th>
                     <th>カテゴリ</th>
-                    <th>入荷予定数</th>
-                    <th>重量（g）</th>
+                    <th class="text-number">入荷予定数</th>
+                    <th class="text-number">重量（g）</th>
                     <th>入荷予定日</th>
                     @unless($isDashboard)
-                    <th>操作</th>
+                    <th class="text-center">操作</th>
                     @endif
                 </tr>
             </thead>
@@ -31,12 +31,12 @@
                     <td>{{ $plan->display_product_code }}</td>
                     <td>{{ $plan->product->name }}</td>
                     <td>{{ $plan->product->category->name }}</td>
-                    <td>{{ $plan->quantity }}</td>
-                    <td>{{ number_format($plan->totalWeight()) }}g</td>
+                    <td class="text-number">{{ $plan->quantity }}</td>
+                    <td class="text-number">{{ number_format($plan->totalWeight()) }}g</td>
                     <td>
                         {{ $plan->arriving_date }}
                         @if($plan->status === \App\IncomingPlan::STATUS_ARRIVED)
-                            <span class="badge bg-success ml-2">入荷済み</span>
+                        <span class="badge bg-success ml-2">入荷済み</span>
                         @endif
                     </td>
                     @unless($isDashboard)
@@ -52,7 +52,7 @@
                             </form>
                         </div>
                         @else
-                        <span class="text-muted">-</span>
+                        <span class="text-muted text-center">-</span>
                         @endif
                     </td>
                     @endif

@@ -4,12 +4,18 @@
     <td>{{ $shop->name }}</td>
     <td>{{ $shop->prefecture }}{{ $shop->city }}</td>
     <td>{{ $shop->phone }}</td>
-    <td>{{ $shop->stocks_count }}</td>
-    <td>{{ $shop->status_name }}</td>
-    <td>{{ $shop->created_at->format('Y-m-d') }}</td>
+    <td class="text-center">{{ $shop->created_at->format('Y-m-d') }}</td>
+    <td class="text-number">{{ $shop->stocks_count }}</td>
+    <td class="text-center">
+        @if($shop->is_active)
+        <span class="badge badge-success">{{ $shop->status_name }}</span>
+        @else
+        <span class="badge badge-secondary">{{ $shop->status_name }}</span>
+        @endif
+    </td>
     <td>
         @if($shop->is_active)
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-center">
             <a href="{{ route('shops.edit', $shop) }}" class="btn btn-sm btn-outline-primary mr-2">編集</a>
             <form action="{{ route('shops.toggle', $shop) }}" method="post" class="mb-0">
                 @csrf
@@ -19,7 +25,7 @@
             </form>
         </div>
         @else
-        <div class="d-flex justify-content-start">
+        <div class="d-flex justify-content-center">
             <form action="{{ route('shops.toggle', $shop) }}" method="post" class="mb-0">
                 @csrf
                 @method('PATCH')

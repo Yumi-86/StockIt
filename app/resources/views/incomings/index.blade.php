@@ -77,4 +77,7 @@
     'isDashboard' => false,
     ])
 </div>
+<button id="scrollTopBtn" class="btn btn-primary scroll-top-btn">
+    ↑
+</button>
 @endsection

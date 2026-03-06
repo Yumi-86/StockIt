@@ -73,7 +73,7 @@
                     全 {{ $stocks->total() }} 件
                 </div>
             </div>
-            <table class="table table-bordered table-hover align-middle">
+            <table class="table table-bordered table-hover align-middle table-fixed">
                 <thead>
                     <tr>
                         <th>商品コード</th>
@@ -82,9 +82,9 @@
                         @if($mode === 'all')
                         <th>所属店舗</th>
                         @endif
-                        <th>在庫数</th>
-                        <th>重量（g）</th>
-                        <th>操作</th>
+                        <th class="text-number">在庫数</th>
+                        <th class="text-number">重量（g）</th>
+                        <th class="text-center">操作</th>
                     </tr>
                 </thead>
                 <tbody id="list">
@@ -100,6 +100,9 @@
         </div>
     </div>
 </div>
+<button id="scrollTopBtn" class="btn btn-primary scroll-top-btn">
+    ↑
+</button>
 @endsection
 
 @push('modals')

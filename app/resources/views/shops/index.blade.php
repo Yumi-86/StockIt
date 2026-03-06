@@ -70,17 +70,17 @@
                     全 {{ $shops->total() }} 件
                 </div>
             </div>
-            <table class="table table-striped table-hover align-middle ">
+            <table class="table table-striped table-hover align-middle table-fixed">
                 <thead>
                     <tr>
                         <th style="width: 15%;">店舗コード</th>
                         <th style="width: 10%;">店舗名</th>
                         <th style="width: 15%;">所在地</th>
                         <th style="width: 15%;">電話番号</th>
-                        <th style="width: 10%">在庫数</th>
-                        <th style="width: 10%;">ステータス</th>
-                        <th style="width: 10%;">作成日</th>
-                        <th style="width: 15%;">操作</th>
+                        <th style="width: 10%;" class="text-center">作成日</th>
+                        <th style="width: 10%" class="text-number">在庫数</th>
+                        <th style="width: 10%;" class="text-center">ステータス</th>
+                        <th style="width: 15%;" class="text-center">操作</th>
                     </tr>
                 </thead>
                 <tbody id="list">
@@ -96,4 +96,7 @@
         </div>
     </div>
 </div>
+<button id="scrollTopBtn" class="btn btn-primary scroll-top-btn">
+    ↑
+</button>
 @endsection

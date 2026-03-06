@@ -66,6 +66,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
         quantity.addEventListener('input', calculateTotal);
         product.addEventListener('change', calculateTotal);
+
+        calculateTotal();
     }
 
     const IssueQuantity = document.getElementById('issue_quantity');
@@ -174,5 +176,22 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
     window.addEventListener('scroll', handleScroll);
+
+    const scrollBtn = document.getElementById('scrollTopBtn');
+
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 300) {
+            scrollBtn.style.display = 'flex';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+
+    scrollBtn.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    });
 
 });

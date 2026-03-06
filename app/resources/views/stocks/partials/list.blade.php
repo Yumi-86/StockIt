@@ -6,8 +6,8 @@
     @if($mode === 'all')
     <td>{{ $stock->shop->name }}</td>
     @endif
-    <td>{{ $stock->quantity }}</td>
-    <td>
+    <td class="text-number">{{ $stock->quantity }}</td>
+    <td class="text-number">
         {{ number_format($stock->totalWeight()) }}g
     </td>
     <td>

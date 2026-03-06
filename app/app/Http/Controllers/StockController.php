@@ -73,6 +73,8 @@ class StockController extends Controller
     }
 
     public function edit(Stock $stock) {
+        $this->authorize('update', $stock);
+        
         $stock->load('product', 'shop');
 
         return view('stocks.edit', compact('stock'));
@@ -80,6 +82,8 @@ class StockController extends Controller
 
     public function update(StockRequest $request, Stock $stock)
     {
+        $this->authorize('update', $stock);
+
         $data = $request->validated();
 
         $stock->decrement('quantity', $data['quantity']);

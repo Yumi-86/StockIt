@@ -63,15 +63,15 @@
                     全 {{ $staffs->total() }} 件
                 </div>
             </div>
-            <table class="table table-striped table-hover align-middle ">
+            <table class="table table-striped table-hover align-middle table-fixed">
                 <thead>
                     <tr>
                         <th style="width: 25%;">スタッフ名</th>
                         <th style="width: 25%;">メールアドレス</th>
                         <th style="width: 15%;">所属店舗名</th>
-                        <th style="width: 10%;">権限</th>
-                        <th style="width: 10%;">状態</th>
-                        <th style="width: 15%;">操作</th>
+                        <th style="width: 10%;" class="text-center">権限</th>
+                        <th style="width: 10%;" class="text-center">状態</th>
+                        <th style="width: 15%;" class="text-center">操作</th>
                     </tr>
                 </thead>
                 <tbody id="list">
@@ -87,4 +87,7 @@
         </div>
     </div>
 </div>
+<button id="scrollTopBtn" class="btn btn-primary scroll-top-btn">
+    ↑
+</button>
 @endsection

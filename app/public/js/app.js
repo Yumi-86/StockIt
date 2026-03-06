@@ -37196,6 +37196,7 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     quantity.addEventListener('input', calculateTotal);
     product.addEventListener('change', calculateTotal);
+    calculateTotal();
   }
   var IssueQuantity = document.getElementById('issue_quantity');
   var stockAfter = document.getElementById('stock_after_value');
@@ -37335,6 +37336,20 @@ window.addEventListener('DOMContentLoaded', function () {
     return _handleScroll.apply(this, arguments);
   }
   window.addEventListener('scroll', handleScroll);
+  var scrollBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 300) {
+      scrollBtn.style.display = 'flex';
+    } else {
+      scrollBtn.style.display = 'none';
+    }
+  });
+  scrollBtn.addEventListener('click', function () {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
 });
 
 /***/ }),

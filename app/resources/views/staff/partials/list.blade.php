@@ -3,11 +3,17 @@
     <td>{{ $staff->name }}</td>
     <td>{{ $staff->email }}</td>
     <td>{{ $staff->shop->name }}</td>
-    <td>{{ $staff->role_name }}</td>
-    <td>{{ $staff->status_name }}</td>
+    <td class="text-center">{{ $staff->role_name }}</td>
+    <td class="text-center">
+        @if($staff->is_active)
+        <span class="badge badge-success">{{ $staff->status_name }}</span>
+        @else
+        <span class="badge badge-secondary">{{ $staff->status_name }}</span>
+        @endif
+    </td>
     <td>
         @if($staff->is_active)
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-center">
             <a href="{{ route('staff.edit', ['user' => $staff] ) }}" class="btn btn-sm btn-outline-primary mr-2">編集</a>
             <form action="{{ route('staff.toggle', ['user' => $staff]) }}" method="post" class="mb-0">
                 @csrf
@@ -17,7 +23,7 @@
             </form>
         </div>
         @else
-        <div class="d-flex justify-content-start">
+        <div class="d-flex justify-content-center">
             <form action="{{ route('staff.toggle', ['user' => $staff] ) }}" method="post" class="mb-0">
                 @csrf
                 @method('PATCH')

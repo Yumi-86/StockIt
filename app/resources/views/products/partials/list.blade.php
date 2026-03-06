@@ -1,18 +1,22 @@
 @forelse($products as $product)
 <tr>
-    <td>{{ $product->display_product_code }}</td>
     <td>
-        <img src="{{ $product->image_url ?? asset('images/no-image.png') }}" width="60" alt="商品画像" width="60">
+        <img src="{{ $product->image_url ?? asset('images/no-image.png') }}" alt="商品画像" class="table-image">
     </td>
+    <td>{{ $product->display_product_code }}</td>
     <td>{{ $product->name }}</td>
     <td>{{ $product->category->name }}</td>
-    <td>{{ number_format($product->weight) }}g</td>
-    <td>
-        {{ $product->statusName }}
+    <td class="text-number">{{ number_format($product->weight) }}g</td>
+    <td class="text-center">
+        @if($product->is_active)
+        <span class="badge badge-success">{{ $product->statusName }}</span>
+        @else
+        <span class="badge badge-secondary">{{ $product->statusName }}</span>
+        @endif
     </td>
     <td>
         @if($product->is_active)
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-center">
             <a href="{{ route('products.edit', $product ) }}" class="btn btn-sm btn-outline-primary mr-2">編集</a>
             <form action="{{ route('products.toggle', $product) }}" method="post" class="mb-0">
                 @csrf
@@ -22,7 +26,7 @@
             </form>
         </div>
         @else
-        <div class="d-flex justify-content-start">
+        <div class="d-flex justify-content-center">
             <form action="{{ route('products.toggle', $product ) }}" method="post" class="mb-0">
                 @csrf
                 @method('PATCH')

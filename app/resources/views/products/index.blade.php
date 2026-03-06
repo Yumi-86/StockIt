@@ -80,16 +80,16 @@
                     全 {{ $products->total() }} 件
                 </div>
             </div>
-            <table class="table table-striped table-hover align-middle ">
+            <table class="table table-striped table-hover align-middle table-fixed">
                 <thead>
                     <tr>
-                        <th style="width: 20%;">商品コード</th>
                         <th style="width: 15%;">商品画像</th>
-                        <th style="width: 20%;">商品名</th>
+                        <th style="width: 15%;">商品コード</th>
+                        <th style="width: 25%;">商品名</th>
                         <th style="width: 10%;">カテゴリ</th>
-                        <th style="width: 10%;">重量（g）</th>
-                        <th style="width: 10%;">状態</th>
-                        <th style="width: 15%;">操作</th>
+                        <th style="width: 10%;" class="text-number">重量（g）</th>
+                        <th style="width: 10%;" class="text-center">状態</th>
+                        <th style="width: 15%;" class="text-center">操作</th>
                     </tr>
                 </thead>
                 <tbody id="list">
@@ -105,4 +105,7 @@
         </div>
     </div>
 </div>
+<button id="scrollTopBtn" class="btn btn-primary scroll-top-btn">
+    ↑
+</button>
 @endsection
