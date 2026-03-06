@@ -2,16 +2,17 @@ require('./bootstrap');
 require('bootstrap');
 
 window.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll('.js-confirm');
+    
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.js-confirm');
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            const message = this.dataset.message;
+        if (!btn) return;
 
-            if (!confirm(message)) {
-                e.preventDefault();
-            }
-        });
+        const message = btn.dataset.message || '本当に実行しますか？';
+
+        if (!confirm(message)) {
+            e.preventDefault();
+        }
     });
 
     const putImage = document.getElementById('putImage');
@@ -162,14 +163,16 @@ window.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            document
-                .getElementById('stock-list')
-                .insertAdjacentHTML('beforeend', html);
+            const list = document.getElementById('list');
+
+            if (list) {
+                list.insertAdjacentHTML('beforeend', html);
+            }
 
             loadingEl.classList.add('d-none');
             loading = false;
         }
     }
     window.addEventListener('scroll', handleScroll);
-    
+
 });

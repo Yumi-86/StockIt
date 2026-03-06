@@ -49,17 +49,18 @@
     @if($incomingPlan->status === \App\IncomingPlan::STATUS_NOT_ARRIVED)
 
     <div class="border-top pt-4 my-4">
-        <div class="alert alert-warning">
-            この入荷予定を確定すると、在庫へ反映され、編集できなくなります。
+        <div class="alert alert-warning d-flex justify-content-between align-items-center">
+            <div>
+                この入荷予定を確定すると、在庫へ反映され、編集できなくなります。
+            </div>
+            <form action="{{ route('incomings.confirm', $incomingPlan) }}" method="post" class="text-right">
+                @csrf
+                @method('PATCH')
+                <button class="btn btn-danger">
+                    入荷確定する
+                </button>
+            </form>
         </div>
-
-        <form action="{{ route('incomings.confirm', $incomingPlan) }}" method="post" class="text-right">
-            @csrf
-            @method('PATCH')
-            <button class="btn btn-danger">
-                入荷確定する
-            </button>
-        </form>
     </div>
 
     @endif

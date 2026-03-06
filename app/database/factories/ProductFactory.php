@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
-        'code' => rand(1, 99999),
+        'code' => $faker->unique()->numberBetween(1, 99999),
         'code_prefix' => 'UNK',
         'category_id' => rand(1, 3),
         'name' => $faker->word,

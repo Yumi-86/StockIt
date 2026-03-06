@@ -13,18 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RegionSeeder::class);
+
+        DB::table('sequences')->updateOrInsert([
+            'name' => 'product_code',
+            'current_value' => 0,
+        ]);
+
+        DB::table('sequences')->updateOrInsert([
+            'name' => 'shop_code',
+            'current_value' => 0,
+        ]);
+
         $this->call(ShopSeeder::class);
         $this->call(AdminUserSeeder::class);
         $this->call(CategorySeeder::class);
 
         factory(User::class, 10)->create();
-        factory(IncomingPlan::class, 100)->create();
+        factory(IncomingPlan::class, 200)->create();
         
         $this->call(StockSeeder::class);
 
-        DB::table('sequences')->insert([
-            'name' => 'product_code',
-            'current_value' => 0,
-        ]);
     }
 }

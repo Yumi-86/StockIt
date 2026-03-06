@@ -41,6 +41,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
         Route::put('/products/{product}/edit', [ProductController::class, 'update'])->name('products.update');
         Route::patch('products/{product}/toggle', [ProductController::class, 'toggle'])->name('products.toggle');
+
+        Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
+        Route::get('/shops/create', [ShopController::class, 'create'])->name('shops.create');
+        Route::post('/shops/create', [ShopController::class, 'store'])->name('shops.store');
+        Route::get('/shops/{shop}/edit', [ShopController::class, 'edit'])->name('shops.edit');
+        Route::put('/shops/{shop}/edit', [ShopController::class, 'update'])->name('shops.update');
+        Route::patch('/shops/{shop}/toggle', [ShopController::class, 'toggle'])->name('shops.toggle');
     });
     Route::middleware(['general'])->group(function () {
         Route::get('/general', [DashboardController::class, 'index'])->name('general.dashboard');

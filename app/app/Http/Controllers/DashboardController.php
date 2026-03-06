@@ -8,6 +8,7 @@ use App\Stock;
 use App\IncomingPlan;
 use App\User;
 use App\Product;
+use App\Shop;
 
 class DashboardController extends Controller
 {
@@ -56,6 +57,9 @@ class DashboardController extends Controller
                 ->count();
 
             $data['productMasterCount'] = Product::where('is_active', true)
+                ->count();
+
+            $data['totalShops'] = Shop::where('is_active', true)
                 ->count();
         }
 

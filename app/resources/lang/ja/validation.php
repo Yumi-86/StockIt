@@ -98,7 +98,7 @@ return [
     'numeric' => 'The :attribute must be a number.',
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
-    'regex' => 'The :attribute format is invalid.',
+    'regex' => ':attributeの形式が正しくありません。',
     'required' => ':attribute は必須です。',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
@@ -155,5 +155,6 @@ return [
         'category_id' => 'カテゴリ',
         'image_path' => '画像ファイル',
         'arriving_date' => '入荷予定日',
+        'phone' => '電話番号',
     ],
 ];

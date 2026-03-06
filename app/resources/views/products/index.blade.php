@@ -18,15 +18,21 @@
     @endif
     <div class="card shadow-sm mb-4 border-0 rounded">
         <div class="card-body">
+            @error('code')
+            <div class="alert alert-danger py-2">
+                {{ $message }}
+            </div>
+            @endif
+
             <form action="{{ route('products.index') }}" method="get" class="row align-items-end">
                 <div class="col-lg-2 col-md-2">
                     <label for="code" class="form-label">商品コード</label>
                     <input type="text"
-                        name="code"
-                        id="code"
-                        class="form-control"
-                        value="{{ request('code') }}"
-                        placeholder="ABC-01234">
+                    name="code"
+                    id="code"
+                    class="form-control @error('code') is-invalid @enderror"
+                    value="{{ old('code', request('code')) }}"
+                    placeholder="ABC-01234">
                 </div>
 
                 <div class="col-lg-3 col-md-2">

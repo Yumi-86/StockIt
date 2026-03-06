@@ -37148,14 +37148,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 window.addEventListener('DOMContentLoaded', function () {
-  var buttons = document.querySelectorAll('.js-confirm');
-  buttons.forEach(function (button) {
-    button.addEventListener('click', function (e) {
-      var message = this.dataset.message;
-      if (!confirm(message)) {
-        e.preventDefault();
-      }
-    });
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.js-confirm');
+    if (!btn) return;
+    var message = btn.dataset.message || '本当に実行しますか？';
+    if (!confirm(message)) {
+      e.preventDefault();
+    }
   });
   var putImage = document.getElementById('putImage');
   var previewImage = document.getElementById('previewImage');
@@ -37279,7 +37278,7 @@ window.addEventListener('DOMContentLoaded', function () {
   }
   function _handleScroll() {
     _handleScroll = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-      var loadingEl, params, response, html;
+      var loadingEl, params, response, html, list;
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.n) {
           case 0:
@@ -37322,7 +37321,10 @@ window.addEventListener('DOMContentLoaded', function () {
             document.getElementById('endOfList').classList.remove('d-none');
             return _context2.a(2);
           case 4:
-            document.getElementById('stock-list').insertAdjacentHTML('beforeend', html);
+            list = document.getElementById('list');
+            if (list) {
+              list.insertAdjacentHTML('beforeend', html);
+            }
             loadingEl.classList.add('d-none');
             loading = false;
           case 5:

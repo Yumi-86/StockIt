@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\CodeSearchRequest;
 use Illuminate\Http\Request;
 use App\Stock;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,7 @@ use App\Http\Requests\StockRequest;
 
 class StockController extends Controller
 {
-    public function index(Request $request)
+    public function index(CodeSearchRequest $request)
     {
         $user = Auth::user();
 
@@ -20,7 +21,8 @@ class StockController extends Controller
             $query->where('shop_id', $user->shop_id);
         }
 
-        $stocks = $query->keywordSearch($request->keyword)
+        $stocks = $query->codeSearch($request->code)
+            ->keywordSearch($request->keyword)
             ->categorySearch($request->category_id)
             ->paginate(10);
 

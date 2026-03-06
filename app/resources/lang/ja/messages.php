@@ -10,4 +10,8 @@ return [
     'incomingPlan_confirmed' => '入荷を確定しました',
 
     'stock_adjusted' => ':code :name を:quantity点出庫しました',
+
+    'shop_created' => '店舗を新規登録しました',
+    'shop_info_updated' => ':name の情報を更新しました',
+    'shop_status_updated' => ':name の状態を変更しました',
 ];

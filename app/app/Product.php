@@ -8,7 +8,13 @@ use Illuminate\Validation\Rules\Exists;
 class Product extends Model
 {
     protected $fillable = [
-        'code','code_prefix', 'category_id', 'name', 'weight', 'image_path', 'is_active'
+        'code',
+        'code_prefix',
+        'category_id',
+        'name',
+        'weight',
+        'image_path',
+        'is_active'
     ];
 
     protected $appends = [
@@ -16,52 +22,56 @@ class Product extends Model
         'image_url',
     ];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function stocks() {
+    public function stocks()
+    {
         return $this->hasMany(Stock::class);
     }
 
-    public function incomingPlans() {
+    public function incomingPlans()
+    {
         return $this->hasMany(IncomingPlan::class);
     }
 
-    public function getStatusNameAttribute() {
+    public function getStatusNameAttribute()
+    {
         return $this->is_active ? '有効' : '無効';
     }
 
-    public function scopeCodeSearch($query, $keyword)
+    public function scopeCodeSearch($query, $code)
     {
-        if ($keyword === null && $keyword === '') {
+        if (empty($code)) {
             return $query;
         }
 
-        $keyword = trim($keyword);
+        $code = trim($code);
 
-        if (!str_contains($keyword, '-')) {
-            return $query;
+        if (str_contains($code, '-')) {
+            [$prefix, $code] = array_pad(explode('-', $code, 2), 2, null);
+
+            if (!$prefix || !$code) {
+                return $query->whereRaw('1=0');
+            }
+
+            $code = ltrim($code, '0');
+
+            return $query->where('code_prefix', $prefix)
+                ->where('code', $code);
         }
 
-        [$prefix, $code] = array_pad(explode('-', $keyword, 2), 2, null);
-
-        if (!$prefix || !$code) {
-            return $query;
-        }
-
-        $code = ltrim($code, '0');
-
-        return $query->where('code_prefix', $prefix)
-            ->where('code', $code);
+        return $query->whereRaw('1=0');
     }
 
     public function scopeKeywordSearch($query, $keyword)
     {
-        if($keyword == null || $keyword == '') {
+        if ($keyword == null || $keyword == '') {
             return $query;
         }
-        
+
         return $query->where(function ($q) use ($keyword) {
             $q->where('name', 'like', "%{$keyword}%")
                 ->orWhereHas('category', function ($c) use ($keyword) {
@@ -70,15 +80,17 @@ class Product extends Model
         });
     }
 
-    public function scopeCategorySearch($query, $categoryId) {
-        if($categoryId !== null && $categoryId !== '') {
+    public function scopeCategorySearch($query, $categoryId)
+    {
+        if ($categoryId !== null && $categoryId !== '') {
             $query->where('category_id', $categoryId);
         }
         return $query;
     }
 
-    public function scopeStatusSearch($query, $is_active) {
-        if($is_active !== null && $is_active !== '') {
+    public function scopeStatusSearch($query, $is_active)
+    {
+        if ($is_active !== null && $is_active !== '') {
             $query->where('is_active', $is_active);
         }
         return $query;
@@ -87,15 +99,17 @@ class Product extends Model
     public function getDisplayProductCodeAttribute()
     {
         return $this->code_prefix . '-' .
-        str_pad($this->code, 5, '0', STR_PAD_LEFT);
+            str_pad($this->code, 5, '0', STR_PAD_LEFT);
     }
 
     public function getImageUrlAttribute()
     {
-        if($this->image_path &&
-            file_exists('storage/' . $this->image_path)) {
-                return asset('storage/' . $this->image_path);
-            }
+        if (
+            $this->image_path &&
+            file_exists('storage/' . $this->image_path)
+        ) {
+            return asset('storage/' . $this->image_path);
+        }
 
         return null;
     }

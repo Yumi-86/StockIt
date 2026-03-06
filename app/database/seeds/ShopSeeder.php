@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Shop;
+use Illuminate\Support\Facades\App;
 
 class ShopSeeder extends Seeder
 {
@@ -12,24 +13,6 @@ class ShopSeeder extends Seeder
      */
     public function run()
     {
-        $shops = [
-            [
-                'name' => '新宿店',
-                'code' => 'SHINJUKU',
-                'is_active' => true,
-            ],
-            [
-                'name' => '池袋店',
-                'code' => 'IKEBUKURO',
-                'is_active' => true,
-            ],
-        ];
-
-        foreach ($shops as $shop) {
-            Shop::updateOrCreate(
-                ['code' => $shop['code']],
-                $shop
-            );
-        }
+        factory(Shop::class, 50)->create();
     }
 }

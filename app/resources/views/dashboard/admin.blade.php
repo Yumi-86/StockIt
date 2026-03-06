@@ -2,8 +2,11 @@
 
     <div class="mb-4">
         <h1 class="h4 font-weight-bold mb-1">管理者ダッシュボード</h1>
-        <p class="text-muted small mb-0">
+        <p class="text-muted d-block small mb-0">
             こんにちは {{ $user->name }} さん
+        </p>
+        <p class="d-block mb-0 text-muted small">
+            所属：{{ $user->shop->name }}
         </p>
     </div>
 

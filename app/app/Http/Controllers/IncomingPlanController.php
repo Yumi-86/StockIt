@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\IncomingPlan;
 use App\Category;
+use App\Http\Requests\CodeSearchRequest;
 use App\Product;
 use App\Http\Requests\IncomingPlanRequest;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +15,13 @@ use Illuminate\Support\Facades\DB;
 class IncomingPlanController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(CodeSearchRequest $request)
     {
         $categories = Category::all();
         $shopId = Auth::user()->shop_id;
 
         $incomingPlans = IncomingPlan::byShop($shopId)
+            ->codeSearch($request->code)
             ->keywordSearch($request->keyword)
             ->categorySearch($request->category_id)
             ->dateSearch($request->arriving_date)

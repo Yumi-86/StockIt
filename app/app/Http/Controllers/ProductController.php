@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
+use App\Http\Requests\CodeSearchRequest;
 use App\Services\SequenceService;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(CodeSearchRequest $request)
     {
         $categories = Category::all();
 
