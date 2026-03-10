@@ -18,6 +18,7 @@ class ShopController extends Controller
             ->codeSearch($request->code)
             ->keywordSearch($request->keyword)
             ->statusSearch($request->is_active)
+            ->sorted($request->sort)
             ->paginate(10);
 
         if($request->ajax()) {

@@ -20,7 +20,7 @@
         <div class="card-body">
             <form action="{{ route('staff.index') }}" method="get" class="row align-items-end">
 
-                <div class="col-lg-5 col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <label for="keyword" class="form-label">キーワード</label>
                     <input type="text"
                         name="keyword"
@@ -47,6 +47,12 @@
                         <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>無効</option>
                     </select>
                 </div>
+                @include('layouts.partials.sort_search', [
+                    'newest' => '新しい順',
+                    'oldest' => '古い順',
+                    'title_asc' => '氏名昇順',
+                    'title_desc' => '氏名降順'
+                ])
                 <div class="col-md-4 col-lg-3 d-flex justify-content-end">
                     <button class="btn btn-primary px-4 mr-2">検索</button>
                     <a href="{{ route('staff.index') }}" class="btn btn-outline-secondary px-4">

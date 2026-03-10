@@ -106,4 +106,20 @@ class IncomingPlan extends Model
     {
         return $this->product->code_prefix . '-' . str_pad($this->product->code, 5, '0', STR_PAD_LEFT);
     }
+
+    public function scopeSorted($query, $sort)
+    {
+        switch ($sort) {
+            case 'oldest':
+                return $query->orderBy('created_at', 'asc');
+                break;
+            case 'title_asc':
+                return $query->orderBy('name', 'asc');
+                break;
+            case 'title_desc':
+                return $query->orderBy('name', 'desc');
+                break;
+        }
+        return $query;
+    }
 }

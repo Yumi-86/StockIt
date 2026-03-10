@@ -113,4 +113,20 @@ class Product extends Model
 
         return null;
     }
+
+    public function scopeSorted($query, $sort)
+    {
+        switch($sort) {
+            case 'oldest':
+                return $query->orderBy('created_at', 'asc');
+                break;
+            case 'title_asc':
+                return $query->orderBy('name', 'asc');
+                break;
+            case 'title_desc':
+                return $query->orderBy('name', 'desc');
+                break;
+        }
+        return $query;
+    }
 }

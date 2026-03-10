@@ -96,4 +96,27 @@ class Stock extends Model
     {
         return $this->product->code_prefix . '-' . str_pad($this->product->code, 5, '0', STR_PAD_LEFT);
     }
+
+    public function scopeSorted($query, $sort)
+    {
+        switch ($sort) {
+            case 'newest':
+                return $query->orderBy('stocks.created_at', 'desc');
+                break;
+
+            case 'oldest':
+                return $query->orderBy('stocks.created_at', 'asc');
+                break;
+            case 'title_asc':
+                return $query->join('products', 'stocks.product_id', '=', 'products.id')->select('stocks.*')->orderBy('products.name', 'asc');
+                break;
+            case 'title_desc':
+                return $query->join('products', 'stocks.product_id', '=', 'products.id')->select('stocks.*')->orderBy('products.name', 'desc');
+                break;
+
+            default:
+                $query->orderBy('stocks.updated_at', 'desc');
+        }
+        return $query;
+    }
 }

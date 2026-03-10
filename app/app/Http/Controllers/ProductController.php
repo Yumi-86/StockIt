@@ -18,12 +18,16 @@ class ProductController extends Controller
     {
         $categories = Category::all();
 
+        $sort = $request->get('sort', 'newest');
+
         $products = Product::with('category')
             ->codeSearch($request->code)
             ->keywordSearch($request->keyword)
             ->categorySearch($request->category_id)
             ->statusSearch($request->is_active)
-            ->paginate(10);
+            ->sorted($sort)
+            ->paginate(10)
+            ->appends(request()->query());
 
         if($request->ajax()) {
             if ($products->isEmpty()) {

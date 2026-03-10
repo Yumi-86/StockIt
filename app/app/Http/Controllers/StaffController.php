@@ -16,6 +16,7 @@ class StaffController extends Controller
             ->keywordSearch($request->input('keyword'))
             ->roleSearch($request->input('role'))
             ->isActiveSearch($request->input('is_active'))
+            ->sorted($request->sort)
             ->paginate(10);
 
         if ($request->ajax()) {

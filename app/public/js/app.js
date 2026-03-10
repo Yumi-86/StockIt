@@ -37350,6 +37350,9 @@ window.addEventListener('DOMContentLoaded', function () {
       behavior: 'smooth'
     });
   });
+  document.getElementById('sort').addEventListener('change', function () {
+    this.form.submit();
+  });
 });
 
 /***/ }),

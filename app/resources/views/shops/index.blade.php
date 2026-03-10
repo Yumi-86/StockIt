@@ -25,7 +25,7 @@
             @endif
 
             <form action="{{ route('shops.index') }}" method="get" class="row align-items-end">
-                <div class="col-lg-3 col-md-4">
+                <div class="col-lg-2 col-md-2">
                     <label for="code" class="form-label">店舗コード</label>
                     <input type="text"
                         name="code"
@@ -35,7 +35,7 @@
                         placeholder="ABC-01234">
                 </div>
 
-                <div class="col-lg-4 col-md-3">
+                <div class="col-lg-3 col-md-3">
                     <label for="keyword" class="form-label">キーワード</label>
                     <input type="text"
                         name="keyword"
@@ -53,6 +53,13 @@
                         <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>無効</option>
                     </select>
                 </div>
+
+                @include('layouts.partials.sort_search', [
+                'newest' => '新しい順',
+                'oldest' => '古い順',
+                'title_asc' => '店舗名昇順',
+                'title_desc' => '店舗名降順'
+                ])
 
                 <div class="col-md-3 col-lg-3 d-flex justify-content-end">
                     <button class="btn btn-primary px-4 mr-2">検索</button>

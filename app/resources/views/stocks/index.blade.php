@@ -33,7 +33,7 @@
                         placeholder="ABC-12345">
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="keyword" class="form-label">キーワード</label>
                     <input type="text"
                         name="keyword"
@@ -47,7 +47,7 @@
                     @endif>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="category_id" class="form-label">カテゴリ</label>
                     <select name="category_id" id="category_id" class="form-control">
                         <option value="">すべて</option>
@@ -56,6 +56,13 @@
                         @endforeach
                     </select>
                 </div>
+
+                @include('layouts.partials.sort_search', [
+                    'newest' => '更新昇順',
+                    'oldest' => '更新降順',
+                    'title_asc' => '商品名昇順',
+                    'title_desc' => '商品名降順'
+                ])
 
                 <div class="col-md-3 d-flex justify-content-end">
                     <button class="btn btn-primary px-4 mr-2">検索</button>

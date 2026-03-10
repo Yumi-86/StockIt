@@ -194,4 +194,8 @@ window.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.getElementById('sort').addEventListener('change', function () {
+        this.form.submit();
+    });
+
 });

@@ -19,6 +19,7 @@ class StockController extends Controller
         $stocks = $query->codeSearch($request->code)
             ->keywordSearch($request->keyword)
             ->categorySearch($request->category_id)
+            ->sorted($request->sort)
             ->paginate(10);
 
         $categories = Category::all();
@@ -51,6 +52,7 @@ class StockController extends Controller
         $stocks = $query->codeSearch($request->code)
             ->keywordSearch($request->keyword)
             ->categorySearch($request->category_id)
+            ->sorted($request->sort)
             ->paginate(10);
 
         $categories = Category::all();
