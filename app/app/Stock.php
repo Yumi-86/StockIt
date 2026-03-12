@@ -64,17 +64,11 @@ class Stock extends Model
             $like = "%{$keyword}%";
 
             $query->where(function ($q) use ($like) {
-                $q->whereHas('product', function ($p) use ($like) {
-                    $p->where('name', 'like', $like)
-                        ->orWhereHas('category', function ($c) use ($like) {
-                            $c->where('name', 'like', $like);
-                        });
-                });
+                $q->where('products.name', 'like', $like)
+                    ->orWhere('categories.name', 'like', $like);
 
                 if (auth()->user()->isAdmin()) {
-                    $q->orWhereHas('shop', function ($s) use ($like) {
-                        $s->where('name', 'like', $like);
-                    });
+                    $q->orWhere('shops.name', 'like', $like);
                 }
             });
         }
@@ -108,10 +102,10 @@ class Stock extends Model
                 return $query->orderBy('stocks.created_at', 'asc');
                 break;
             case 'title_asc':
-                return $query->join('products', 'stocks.product_id', '=', 'products.id')->select('stocks.*')->orderBy('products.name', 'asc');
+                return $query->orderBy('products.name', 'asc');
                 break;
             case 'title_desc':
-                return $query->join('products', 'stocks.product_id', '=', 'products.id')->select('stocks.*')->orderBy('products.name', 'desc');
+                return $query->orderBy('products.name', 'desc');
                 break;
 
             default:

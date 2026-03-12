@@ -14,7 +14,12 @@ class StockController extends Controller
     public function all(CodeSearchRequest $request)
     {
 
-        $query = Stock::with(['product.category', 'shop']);
+        $query = Stock::query()
+            ->leftJoin('products', 'stocks.product_id', '=', 'products.id')
+            ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
+            ->leftJoin('shops', 'stocks.shop_id', '=', 'shops.id')
+            ->select('stocks.*')
+            ->with(['product.category', 'shop']);
 
         $stocks = $query->codeSearch($request->code)
             ->keywordSearch($request->keyword)
@@ -45,7 +50,12 @@ class StockController extends Controller
     {
         $user = Auth::user();
 
-        $query = Stock::with('product.category');
+        $query = Stock::query()
+            ->leftJoin('products', 'stocks.product_id', '=', 'products.id')
+            ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
+            ->leftJoin('shops', 'stocks.shop_id', '=', 'shops.id')
+            ->select('stocks.*')
+            ->with(['product.category', 'shop']);
 
         $query->where('shop_id', $user->shop_id);
 

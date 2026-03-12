@@ -103,10 +103,10 @@ class User extends Authenticatable
                 return $query->orderBy('created_at', 'asc');
                 break;
             case 'title_asc':
-                return $query->orderBy('name', 'asc');
+                return $query->orderByRaw("users.name COLLATE utf8mb4_unicode_ci ASC");
                 break;
             case 'title_desc':
-                return $query->orderBy('name', 'desc');
+                return $query->orderByRaw("users.name COLLATE utf8mb4_unicode_ci DESC");
                 break;
         }
         return $query;

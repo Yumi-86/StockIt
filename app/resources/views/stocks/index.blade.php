@@ -40,7 +40,7 @@
                         id="keyword"
                         class="form-control"
                         value="{{ request('keyword') }}"
-                        @if(auth()->user()->isAdmin())
+                        @if(request()->routeIs('stocks.all'))
                     placeholder="商品名・店舗名で検索"
                     @else
                     placeholder="商品名で検索"
@@ -58,10 +58,10 @@
                 </div>
 
                 @include('layouts.partials.sort_search', [
-                    'newest' => '更新昇順',
-                    'oldest' => '更新降順',
-                    'title_asc' => '商品名昇順',
-                    'title_desc' => '商品名降順'
+                'newest' => '更新昇順',
+                'oldest' => '更新降順',
+                'title_asc' => '商品名昇順',
+                'title_desc' => '商品名降順'
                 ])
 
                 <div class="col-md-3 d-flex justify-content-end">
